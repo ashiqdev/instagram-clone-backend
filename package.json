@@ -1,0 +1,42 @@
+{
+  "name": "instagram-clone-backend",
+  "version": "1.0.0",
+  "description": "Instagram-clone-backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AshiqCSEWorld/instagram-clone-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AshiqCSEWorld/instagram-clone-backend/issues"
+  },
+  "homepage": "https://github.com/AshiqCSEWorld/instagram-clone-backend#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1",
+    "debug": "^4.1.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.0",
+    "nodemailer": "^4.7.0",
+    "nodemon": "^1.18.9",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1"
+  }
+}

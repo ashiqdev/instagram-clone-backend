@@ -1,0 +1,150 @@
+There will be 'User' collection.
+	In which properties will be
+		firstName
+		surName
+		email
+		password
+		Date
+		isActive
+		avatar
+		secretToeken
+		resetToken
+		resetTokenExpires
+
+// Verify user
+(when a user registered in our website, 
+    an email with a secret token will be sent to him. 
+    Then when the user click on that url from his mail, 
+    backend will match that secretToken. 
+    If matches then, we will set secretToken property to undefined 
+    and isActive property to true)
+
+// Forget Password
+(When a user send a post request from the react form with his email address, 
+    we will check from the backend that if there is any user exists with that email, 
+    If exists, then we will generate a resetToken using crypto 
+    and sent a email including that token. 
+    when user hit that url from his email, we will check the token from backend, 
+    If token matches, 
+    then we will render a new 'password form' from front end so that user can give new password);
+ 
+
+-------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------
+  BLOCK
+    block_by <ref: 'User'> // Aggregation
+    block_to <ref: 'User'> // Aggregation
+    block_time
+ (here any user can block another user so that he/she cant see him)
+
+---------------------------------------------
+  BOOKMARKS  < ref: POST >
+      bkmark_by <ref: 'User'> // Aggregation
+      post_id   <ref: POST>
+      bkmark_time
+ (there will be an option for book mark in every post. so user can bookmark the post ) 
+      
+-----------------------------------------------------
+ COMMENTS    <ref: POST>
+      type (text, image, sticker)
+      text_comment,      
+      post_id <ref: POST>, 
+      comment_time
+(ther will be a comment section in every post. user have option for  commenting throw text or sticker or image) 
+-----------------------------------------------------------------
+  FAVOURITS  
+     fav_id < ref: POST >,     
+     fav_by <ref: 'User'>,   
+     fav_time, 
+ (there will be an option like bookmarking user select the post as it is his favourites fost) 
+------------------------------------------------------------
+ LIKES   <ref: POST>
+    post_id <ref: POST>
+    like_by <ref: 'User'>,
+    like_time
+--------------------------------------
+ HASHTAGS
+     hashtag 
+     post_id <ref: POST>
+     user <ref: 'User'>
+     hashtag_time
+(user can post #tag, so that it will help to show recent trends) 
+------------------------------------------------------------------  
+
+
+
+
+  GROUPS
+      group_id
+      name
+      bio
+      admin
+      group_type(public, private)
+      created
+(every user can create a group.group admin can add or remove member)
+-------------------------------------------------------
+   GROUP_MEMBERS
+       grp_members_id, 
+       group_id
+       member
+       added_by, 
+       joined_group
+------------------------------------------
+  CONVERSATIONS <ref = USER>
+     con_id, 
+    user_one, 
+    user_two, 
+    con_time
+(there will be a messaging system, one user can create a conversations with another user throw socket.io or whatever i don't know ) 
+------------------------------------------------------------------------------
+  MESSAGES <ref: CONVERSTATIONS> 
+     message_id, 
+     con_id
+     mssg_by
+     mssg_to
+     message
+     type (text or image or sticker) 
+     satus (read or undrad)
+     message_time
+----------------------------------------------
+  POSTS
+    author: ref: 'User'
+    description: String,
+    created: Date,
+    photo: String,
+    location: String
+------------------------------------------------
+  SHARES
+    share_time: Date,
+    share_by: ref: 'User',
+    share_to: ref: 'User',
+    post_id:   ref: 'Post'
+-------------------------------------------------
+ FOLLOW_SYSTEM
+    user: ref: 'User',
+    target: ref: 'User'
+
+------------------------------ 
+NEWS FEED
+    owner: ref: 'User', 
+    post:  ref: 'Post'
+ 
+  
+==========================================================
+NOTIFICATIOSNS
+ 
+POST_TAGS
+
+RECOMMENDTATIONS
+ 
+TAGS
+ 
+
+
+
+
+
+
