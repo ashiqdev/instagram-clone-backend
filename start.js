@@ -9,6 +9,7 @@ mongoose.connection.on('error', (err) => {
 
 // Import all  models
 require('./Model/User');
+require('./Model/Post');
 
 
 // start our app!

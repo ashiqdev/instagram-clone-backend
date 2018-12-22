@@ -1,25 +1,26 @@
-const mongoose = require("mongoose");
-const Scheme = mongoose.Schema;
+// const mongoose = require('mongoose');
 
-const tagSchema = mongoose.Schema({
-  
-  author: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: "You must supply an author!",
-  },
+// const { Schema } = mongoose;
 
-  post: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Post",
-    required: "You must supply an post!",
-  },
+// const tagSchema = new Schema({
 
-  tagged: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: "You must supply an user!",
-  }
-});
+//   author: {
+//     type: mongoose.Schema.ObjectId,
+//     ref: 'User',
+//     required: 'You must supply an author!',
+//   },
 
-module.exports = mongoose.model("Tag", tagSchema);
+//   post: {
+//     type: mongoose.Schema.ObjectId,
+//     ref: 'Post',
+//     required: 'You must supply an post!',
+//   },
+
+//   tagged: {
+//     type: mongoose.Schema.ObjectId,
+//     ref: 'User',
+//     required: 'You must supply an user!',
+//   },
+// });
+
+// module.exports = mongoose.model('Tag', tagSchema);
