@@ -19,6 +19,7 @@
   "homepage": "https://github.com/AshiqCSEWorld/instagram-clone-backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "debug": "^4.1.0",
     "dotenv": "^6.2.0",

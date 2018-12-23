@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const cors = require('cors');
 const routes = require('./routes/index');
 const errorHandlers = require('./handlers/errorHandlers');
 
@@ -7,6 +8,7 @@ const errorHandlers = require('./handlers/errorHandlers');
 const app = express();
 
 // Middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
