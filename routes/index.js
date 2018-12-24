@@ -21,7 +21,7 @@ router.post(
 router.get('/users/post-it', userController.isLoggedIn, postController.getPost);
 
 router.post(
-  '/users/post-it',
+  '/post-it',
   userController.isLoggedIn,
   catchErrors(postController.createPost),
 );
