@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const Post = mongoose.model('Post');
-// const User = mongoose.model('User');
-// const Tag = mongoose.model('Tag');
+const Tag = mongoose.model('Tag');
 
 const multer = require('multer');
 const jimp = require('jimp');
@@ -40,37 +39,39 @@ exports.resize = async (req, res, next) => {
   next();
 };
 
+// Create
 exports.createPost = async (req, res) => {
+
   req.body.type = req.user.id;
-  req.body.tags = req.user.id;
-  await new Post(req.body).save();
-  const errors = {};
-  const post = await Post.findOne({
-    tags: req.user.id,
-  }).populate('tags', ['userName']);
-  if (!post) {
-    errors.noPost = 'There is no post for this user';
-    res.status(400).json(errors);
+  const post = await new Post(req.body).save();
+
+  const { tags } = req.body;  
+
+  const tagPeople = tags.map((tag) => {
+    return { type: req.body.type, post: post.id, user: tag.user };    
+  });
+
+  await Tag.insertMany(tagPeople);
+
+  // Response
+  const postResponse = await Post.findOne({ _id: post.id }).populate('type', ['firstName', 'lastName']);
+  
+  if (!postResponse) {
+    res.status(400).json({ message: 'There is no post for this user' });
     return;
   }
 
-  res.json(post);
-
-  // const {
-  //   tags,
-  // } = req.body.tags;
-
-  // const tagPeople = tags.map(tag => ({
-  //   author: req.user._id,
-  //   post: post._id,
-  //   tagged: tag.tagged,
-  // }));
-
-  // await Tag.insertMany(tagPeople);
-
-  // Response Json
+  res.json({
+    firstname: postResponse.type.firstName,
+    lastname: postResponse.type.lastName,
+    mesg: 'Posted!!',
+    post_id: postResponse.id,
+    success: true,
+  });  
 };
 
+
+//Get 
 exports.getPost = async (req, res) => {
   const errors = {};
   const post = await Post.findOne({
@@ -84,10 +85,6 @@ exports.getPost = async (req, res) => {
   res.json(post);
 };
 
-// Message for Ashik
-// 1) First do this 3 route of code than we disscuss about Tags
-// 2) do not change the structure of my part of code if there is no error
 
-// Get Post
 // Edit Post
 // Delete Post

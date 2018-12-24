@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
+const Scheme = mongoose.Schema;
 
-const postSchema = new Schema({
-
-  // author: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'User',
-  //   required: 'You must supply an author',
-  // },
+const postSchema = new Scheme({
+  type: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'You must supply an author',
+  },
 
   created: {
     type: Date,
@@ -21,25 +20,27 @@ const postSchema = new Schema({
   },
 
   image: {
-    type: String,
-    // required: 'Please enter a photo',
+    type: String
+    // require: 'Please enter a photo',
   },
 
   filter: {
     type: String,
-    trim: true,
+    trim: true
   },
 
   location: {
     type: String,
-    default: 'Point',
+    trim: true
   },
+
+  // type: String,
 
   group: {
     type: String,
-    trim: true,
-  },
-
+    trim: true
+  }
+});
   // function autopopulate(next) {
   //   this.populate('author');
   //   next();
@@ -48,18 +49,6 @@ const postSchema = new Schema({
   // postSchema.pre('find', autopopulate);
   // postSchema.pre('findOne', autopopulate);
 
-  type: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
-
-  tags: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
-
-
-});
 
 
 module.exports = mongoose.model('Post', postSchema);
