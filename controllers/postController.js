@@ -41,21 +41,18 @@ exports.resize = async (req, res, next) => {
 
 // Create
 exports.createPost = async (req, res) => {
-
   req.body.type = req.user.id;
   const post = await new Post(req.body).save();
 
-  const { tags } = req.body;  
+  const { tags } = req.body;
 
-  const tagPeople = tags.map((tag) => {
-    return { type: req.body.type, post: post.id, user: tag.user };    
-  });
+  const tagPeople = tags.map(tag => ({ type: req.body.type, post: post.id, user: tag.user }));
 
   await Tag.insertMany(tagPeople);
 
   // Response
   const postResponse = await Post.findOne({ _id: post.id }).populate('type', ['firstName', 'lastName']);
-  
+
   if (!postResponse) {
     res.status(400).json({ message: 'There is no post for this user' });
     return;
@@ -67,11 +64,11 @@ exports.createPost = async (req, res) => {
     mesg: 'Posted!!',
     post_id: postResponse.id,
     success: true,
-  });  
+  });
 };
 
 
-//Get 
+// Get
 exports.getPost = async (req, res) => {
   const errors = {};
   const post = await Post.findOne({

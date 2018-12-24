@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Scheme = mongoose.Schema;
 
-const tagSchema = new Scheme({  
+const tagSchema = new Scheme({
   type: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

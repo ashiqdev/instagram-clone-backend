@@ -20,35 +20,34 @@ const postSchema = new Scheme({
   },
 
   image: {
-    type: String
+    type: String,
     // require: 'Please enter a photo',
   },
 
   filter: {
     type: String,
-    trim: true
+    trim: true,
   },
 
   location: {
     type: String,
-    trim: true
+    trim: true,
   },
 
   // type: String,
 
   group: {
     type: String,
-    trim: true
-  }
+    trim: true,
+  },
 });
   // function autopopulate(next) {
   //   this.populate('author');
   //   next();
   // }
 
-  // postSchema.pre('find', autopopulate);
-  // postSchema.pre('findOne', autopopulate);
-
+// postSchema.pre('find', autopopulate);
+// postSchema.pre('findOne', autopopulate);
 
 
 module.exports = mongoose.model('Post', postSchema);
