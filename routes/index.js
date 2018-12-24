@@ -17,8 +17,8 @@ router.post(
   userController.update,
 );
 
-// Post
-router.get('/users/post-it', userController.isLoggedIn, postController.getPost);
+
+router.get('/post-it', userController.isLoggedIn, postController.getPost);
 
 router.post(
   '/post-it',
