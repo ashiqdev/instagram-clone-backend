@@ -82,6 +82,31 @@ exports.getPost = async (req, res) => {
   res.json(post);
 };
 
+exports.getFollowings = async (req, res) => {
+  const response = [
+    { follow_to: 24, follow_to_username: 'takkar' },
+    { follow_to: 11, follow_to_username: 'nobita' },
+    { follow_to: 32, follow_to_username: 'iamrakib' },
+    { follow_to: 30, follow_to_username: 'doraemon' },
+    { follow_to: 28, follow_to_username: 'selena' },
+    { follow_to: 16, follow_to_username: 'zayn' },
+  ];
+
+  res.status(200).send(response);
+};
+
+exports.deletePost = async (req, res) => {
+  const post = await Post.findOneAndRemove({ _id: req.body.id });
+  if (post) {
+    res.status(200).json({
+      success: true,
+      mssg: 'Post deleted!!',
+    });
+  } else {
+    res.status(400).json(' Post Not found');
+  }
+};
+
 
 // Edit Post
 // Delete Post

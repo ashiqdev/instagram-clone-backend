@@ -26,4 +26,9 @@ router.post(
   catchErrors(postController.createPost),
 );
 
+router.get('/get-followings', userController.isLoggedIn, postController.getFollowings);
+
+// Delete post
+router.post('/delete-post', postController.deletePost);
+
 module.exports = router;
