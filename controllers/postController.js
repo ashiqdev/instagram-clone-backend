@@ -95,6 +95,25 @@ exports.getFollowings = async (req, res) => {
   res.status(200).send(response);
 };
 
+// Edit Post
+exports.editPost = async (req, res) => {
+  const { post_id, description } = req.body;
+  await Post.update({ _id: post_id }, { $set: { desc: description } });
+
+  res.json({
+    success: true,
+    mssg: 'Post updated!!',
+  });
+};
+
+// UnTag
+exports.untag = async (req, res) => {
+  const { post, user } = req.body;
+  await Tag.findOneAndRemove({ post, user });
+  res.json({ success: true });
+};
+
+// delete
 exports.deletePost = async (req, res) => {
   const post = await Post.findOneAndRemove({ _id: req.body.id });
   if (post) {
@@ -106,7 +125,3 @@ exports.deletePost = async (req, res) => {
     res.status(400).json('Post Not found');
   }
 };
-
-
-// Edit Post
-// Delete Post

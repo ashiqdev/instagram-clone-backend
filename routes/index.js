@@ -17,7 +17,6 @@ router.post(
   userController.update,
 );
 
-
 router.get('/post-it', userController.isLoggedIn, postController.getPost);
 
 router.post(
@@ -26,7 +25,23 @@ router.post(
   catchErrors(postController.createPost),
 );
 
-router.get('/get-followings', userController.isLoggedIn, postController.getFollowings);
+router.get(
+  '/get-followings',
+  userController.isLoggedIn,
+  postController.getFollowings,
+);
+
+router.post(
+  '/edit-post',
+  userController.isLoggedIn,
+  catchErrors(postController.editPost),
+);
+
+router.post(
+  '/untag',
+  userController.isLoggedIn,
+  catchErrors(postController.untag),
+);
 
 // Delete post
 router.post('/delete-post', postController.deletePost);
