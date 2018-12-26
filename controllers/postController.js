@@ -103,7 +103,7 @@ exports.deletePost = async (req, res) => {
       mssg: 'Post deleted!!',
     });
   } else {
-    res.status(400).json(' Post Not found');
+    res.status(400).json('Post Not found');
   }
 };
 

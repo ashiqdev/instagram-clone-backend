@@ -132,7 +132,7 @@ exports.loginUser = async (req, res) => {
 
   // Find user by email
   const user = await User.findOne({
-    email: req.body.email,
+    userName: req.body.userName,
   });
   // Check for user
   if (!user) {

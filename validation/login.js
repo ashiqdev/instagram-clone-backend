@@ -5,24 +5,21 @@ module.exports = function validateLoginInput(data) {
   const errors = {};
   // first check if property is available in data i mean req.body
   let {
-    email,
+    userName,
   } = data;
   let {
     password,
   } = data;
 
-  email = !isEmpty(email) ? email : '';
+  userName = !isEmpty(userName) ? userName : '';
   password = !isEmpty(password) ? password : '';
 
 
   // Check if any property is empty
 
-  if (!Validator.isEmail(email)) {
-    errors.email = 'Email is invalid';
-  }
 
-  if (Validator.isEmpty(email)) {
-    errors.email = 'Email field is required';
+  if (Validator.isEmpty(userName)) {
+    errors.userName = 'userName is required';
   }
 
   if (Validator.isEmpty(password)) {
