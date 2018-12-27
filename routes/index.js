@@ -29,6 +29,7 @@ router.post(
 router.get('/get-followings', userController.isLoggedIn, postController.getFollowings);
 
 // Delete post
-router.post('/delete-post', postController.deletePost);
+router.post('/delete-post', userController.isLoggedIn, postController.deletePost);
+router.post('/likes/:id', userController.isLoggedIn, postController.likedOrNot);
 
 module.exports = router;
