@@ -11,6 +11,7 @@ mongoose.connection.on('error', (err) => {
 require('./Model/User');
 require('./Model/Post');
 require('./Model/Tag');
+require('./Model/Like');
 
 
 // start our app!
