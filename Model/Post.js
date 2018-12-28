@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const Scheme = mongoose.Schema;
@@ -46,6 +47,10 @@ const postSchema = new Scheme({
       user: {
         type: Scheme.Types.ObjectId,
         ref: 'User',
+      },
+      like_time: {
+        type: Date,
+        default: Date.now,
       },
     },
   ],

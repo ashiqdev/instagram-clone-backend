@@ -108,7 +108,7 @@ exports.deletePost = async (req, res) => {
 };
 
 exports.likedOrNot = async (req, res) => {
-  await Post.findOne({ type: req.user.id }).then((post) => {
+  await Post.findOne({ _id: req.params.id }).then((post) => {
     if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
       res.status(400).json({ alreadyLiked: 'User already liked this post' });
       return;
@@ -116,7 +116,12 @@ exports.likedOrNot = async (req, res) => {
     // Add user id to the likes array
     post.likes.unshift({ user: req.user.id });
 
-    post.save().then(mypost => res.json(mypost));
+
+    post.save().then(mypost => res.json({
+      post_id: req.params.id,
+      liked_by: mypost.likes,
+
+    }));
   })
     .catch(() => res.status(404).json({ postNotFound: 'no post found' }));
 };
