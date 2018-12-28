@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const Post = mongoose.model('Post');
 const Tag = mongoose.model('Tag');
+const Unlike = mongoose.model('Unlike');
 
 const multer = require('multer');
 const jimp = require('jimp');
@@ -14,9 +15,12 @@ const multerOptions = {
     if (isPhoto) {
       next(null, true);
     } else {
-      next({
-        message: 'That filetype isn\'t allowed!',
-      }, false);
+      next(
+        {
+          message: "That filetype isn't allowed!",
+        },
+        false,
+      );
     }
   },
 };
@@ -46,12 +50,19 @@ exports.createPost = async (req, res) => {
 
   const { tags } = req.body;
 
-  const tagPeople = tags.map(tag => ({ type: req.body.type, post: post.id, user: tag.user }));
+  const tagPeople = tags.map(tag => ({
+    type: req.body.type,
+    post: post.id,
+    user: tag.user,
+  }));
 
   await Tag.insertMany(tagPeople);
 
   // Response
-  const postResponse = await Post.findOne({ _id: post.id }).populate('type', ['firstName', 'lastName']);
+  const postResponse = await Post.findOne({ _id: post.id }).populate('type', [
+    'firstName',
+    'lastName',
+  ]);
 
   if (!postResponse) {
     res.status(400).json({ message: 'There is no post for this user' });
@@ -66,7 +77,6 @@ exports.createPost = async (req, res) => {
     success: true,
   });
 };
-
 
 // Get
 exports.getPost = async (req, res) => {
@@ -124,4 +134,50 @@ exports.deletePost = async (req, res) => {
   } else {
     res.status(400).json('Post Not found');
   }
+};
+// <<<<<<< HEAD
+// =======
+
+exports.likedOrNot = async (req, res) => {
+  await Post.findOne({ _id: req.params.id })
+    .then((post) => {
+      if (
+        post.likes.filter(like => like.user.toString() === req.user.id).length
+        > 0
+      ) {
+        res.status(400).json({ alreadyLiked: 'User already liked this post' });
+        return;
+      }
+      // Add user id to the likes array
+      post.likes.unshift({ user: req.user.id });
+
+      post.save().then(mypost => res.json({
+          post_id: req.params.id,
+          liked_by: mypost.likes,
+        }),);
+    })
+    .catch(() => res.status(404).json({ postNotFound: 'no post found' }));
+};
+// >>>>>>> ba09872689c2370b1a1d5ea77a4889aa5ed2f022
+
+// Unlike Route
+exports.unLike = async (req, res) => {
+  
+  const unLike = await Unlike.find({
+    post: req.params.id,
+    unlike_by: req.user.id,
+  });
+  
+  if (unLike.length === 0) {
+    const unlike = new Unlike({
+      post: req.params.id,
+      unlike_by: req.user.id,
+    });
+
+    unlike.save();
+    res.json({ mesg: 'saved unlike' });
+    return;
+  }
+
+  res.status(400).json({ mesg: 'already unliked this post' });
 };

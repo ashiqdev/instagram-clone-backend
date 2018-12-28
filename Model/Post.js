@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const Scheme = mongoose.Schema;
@@ -40,6 +41,19 @@ const postSchema = new Scheme({
     type: String,
     trim: true,
   },
+
+  likes: [
+    {
+      user: {
+        type: Scheme.Types.ObjectId,
+        ref: 'User',
+      },
+      like_time: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
   // function autopopulate(next) {
   //   this.populate('author');

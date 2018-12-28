@@ -44,6 +44,12 @@ router.post(
 );
 
 // Delete post
-router.post('/delete-post', postController.deletePost);
+router.post(
+  '/delete-post',
+  userController.isLoggedIn,
+  postController.deletePost,
+);
+router.post('/likes/:id', userController.isLoggedIn, postController.likedOrNot);
+router.post('/unlikes/:id', userController.isLoggedIn, postController.unLike);
 
 module.exports = router;
