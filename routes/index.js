@@ -4,6 +4,8 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const postController = require('../controllers/postController');
+const bookmarkController = require('../controllers/bookmarkcontroller');
+const likeController = require('../controllers/likeController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.post('/users/register', userController.registerUser);
@@ -49,7 +51,22 @@ router.post(
   userController.isLoggedIn,
   postController.deletePost,
 );
-router.post('/likes/:id', userController.isLoggedIn, postController.likedOrNot);
-router.post('/unlikes/:id', userController.isLoggedIn, postController.unLike);
+
+// Bjk
+// router.post('/unlikes/:id', userController.isLoggedIn, postController.unLike);
+
+
+// Likes (one approach)
+router.post('/likes', userController.isLoggedIn, likeController.likePost);
+router.post('/unlikes', userController.isLoggedIn, likeController.unlike);
+
+// Likes (another approach)
+// router.post('/likes/:id', userController.isLoggedIn, postController.likedOrNot);
+// router.post('/remove-like/:id', userController.isLoggedIn, postController.removeLike);
+
+
+// Bookmarks (one approach)
+router.post('/bookmarks', userController.isLoggedIn, bookmarkController.bookmarkPost);
+router.post('/remove-bookmark', userController.isLoggedIn, bookmarkController.removeBookMark);
 
 module.exports = router;

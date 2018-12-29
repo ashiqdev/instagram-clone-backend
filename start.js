@@ -12,7 +12,8 @@ require('./Model/User');
 require('./Model/Post');
 require('./Model/Tag');
 require('./Model/Like');
-require('./Model/Unlike');
+// require('./Model/Unlike');
+require('./Model/Bookmarks');
 
 
 // start our app!

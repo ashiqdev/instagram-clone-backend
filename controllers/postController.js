@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Post = mongoose.model('Post');
 const Tag = mongoose.model('Tag');
-const Unlike = mongoose.model('Unlike');
+// const Unlike = mongoose.model('Unlike');
 
 const multer = require('multer');
 const jimp = require('jimp');
@@ -107,7 +107,9 @@ exports.getFollowings = async (req, res) => {
 
 // Edit Post
 exports.editPost = async (req, res) => {
+  /*eslint-disable */
   const { post_id, description } = req.body;
+  /* eslint-enable */
   await Post.update({ _id: post_id }, { $set: { desc: description } });
 
   res.json({
@@ -150,11 +152,10 @@ exports.likedOrNot = async (req, res) => {
       }
       // Add user id to the likes array
       post.likes.unshift({ user: req.user.id });
-
+      /*eslint-disable */
       post.save().then(mypost => res.json({
-          post_id: req.params.id,
-          liked_by: mypost.likes,
-        }),);
+        success: true
+      }));
     })
     .catch(() => res.status(404).json({ postNotFound: 'no post found' }));
 };
@@ -162,12 +163,11 @@ exports.likedOrNot = async (req, res) => {
 
 // Unlike Route
 exports.unLike = async (req, res) => {
-  
   const unLike = await Unlike.find({
     post: req.params.id,
     unlike_by: req.user.id,
   });
-  
+
   if (unLike.length === 0) {
     const unlike = new Unlike({
       post: req.params.id,
@@ -180,4 +180,25 @@ exports.unLike = async (req, res) => {
   }
 
   res.status(400).json({ mesg: 'already unliked this post' });
+};
+
+exports.removeLike = async (req, res) => {
+  await Post.findOne({ _id: req.params.id })
+    .then((post) => {
+      if (
+        post.likes.filter(like => like.user.toString() === req.user.id).length
+        === 0
+      ) {
+        res.status(400).json({ notLiked: 'You have not yet liked this post' });
+        return;
+      }
+      // Get remove index
+      const removeIndex = post.likes.map(item => item.user.toString()).indexOf(req.user.id);
+      // splice out of the array
+      post.likes.splice(removeIndex, 1);
+
+      // Save
+      post.save().then(post => res.json({success: true}));
+    })
+    .catch(() => res.status(404).json({ postNotFound: 'no post found' }));
 };

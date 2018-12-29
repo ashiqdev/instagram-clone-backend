@@ -42,18 +42,7 @@ const postSchema = new Scheme({
     trim: true,
   },
 
-  likes: [
-    {
-      user: {
-        type: Scheme.Types.ObjectId,
-        ref: 'User',
-      },
-      like_time: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
+
 });
   // function autopopulate(next) {
   //   this.populate('author');
